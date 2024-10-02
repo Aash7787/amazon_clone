@@ -1,7 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_amazon_clone/common/widgets/bottom_bar.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/bottom_bar.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
-import 'package:flutter_amazon_clone/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/routes/on_generates_route.dart';
 import 'package:provider/provider.dart';
@@ -25,14 +26,36 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    context.read<UserAuthProvider>().getUserDate(context);
+    _loadUserToken();
+  }
+
+  void _loadUserToken() async {
+    await context.read<UserAuthProvider>().getUserDate(context);
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    log('${context.read<UserAuthProvider>().user.token} user token');
+
+    if (_isLoading) {
+      return Container(
+        color: Colors.white,
+        height: double.infinity,
+        width: double.infinity,
+        child: Center(
+          child: Image.asset('assets/imgs/amazon_in.png'),
+        ),
+      );
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerateRoutes,
@@ -50,8 +73,8 @@ class _MainAppState extends State<MainApp> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       initialRoute: context.watch<UserAuthProvider>().user.token.isEmpty
-          ? BottomBar.pageName
-          : AuthScreen.pageName,
+          ? AuthScreen.pageName
+          : BottomBar.pageName,
     );
   }
 }

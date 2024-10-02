@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
-import 'package:flutter_amazon_clone/screen/home/home_screen.dart';
+import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});

@@ -3,12 +3,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/err/error_handling.dart';
-import 'package:flutter_amazon_clone/common/widgets/bottom_bar.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/bottom_bar.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 
 import 'package:flutter_amazon_clone/constants/utils.dart';
-import 'package:flutter_amazon_clone/models/user.dart';
-import 'package:flutter_amazon_clone/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/auth/models/user.dart';
+import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,7 +82,7 @@ class AuthService {
     }
   }
 
-  void getUserData(
+  Future<void> getUserData(
     BuildContext context,
   ) async {
     try {

@@ -1,13 +1,21 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/auth/services/auth_service.dart';
-import 'package:flutter_amazon_clone/models/user.dart';
+import 'package:flutter_amazon_clone/features/auth/models/user.dart';
 
 enum Auth { signIn, singUp }
 
 class UserAuthProvider extends ChangeNotifier {
+  void setUser(String users) {
+    _user = User.fromJson(users);
+    log('${user.token} response');
+    notifyListeners();
+  }
+
   User _user = User(
-      id: '',
+      id: 'No id found',
       name: '',
       password: '',
       address: '',
@@ -16,11 +24,6 @@ class UserAuthProvider extends ChangeNotifier {
       email: '');
 
   User get user => _user;
-
-  void setUser(String users) {
-    _user = User.fromJson(users);
-    notifyListeners();
-  }
 
   Auth _auth = Auth.singUp;
 
@@ -77,8 +80,8 @@ class UserAuthProvider extends ChangeNotifier {
         context: context);
   }
 
-  void getUserDate(BuildContext context){
-    authService.getUserData(context);
+  Future<void> getUserDate(BuildContext context) async{
+    return await authService.getUserData(context);
   }
 
   @override

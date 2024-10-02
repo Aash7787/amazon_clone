@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/my_text_form_field_w.dart';
-import 'package:flutter_amazon_clone/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignUpW extends StatelessWidget {

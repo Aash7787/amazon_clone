@@ -29,7 +29,9 @@ class TopButtonsW extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(child: AccountBtnW(text: _logOut)),
-            Expanded(child: AccountBtnW(text: _yourWishList)),
+            Expanded(
+              child: AccountBtnW(text: _yourWishList),
+            ),
           ],
         )
       ],

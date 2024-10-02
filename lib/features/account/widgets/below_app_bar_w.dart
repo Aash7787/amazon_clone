@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
-import 'package:flutter_amazon_clone/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class BelowAppBarW extends StatelessWidget {
@@ -16,7 +16,7 @@ class BelowAppBarW extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(gradient: GlobalVariables.appBarGradient),
       padding: const EdgeInsets.only(
-          left: _edgeInsets, right: _edgeInsets, bottom: _edgeInsets),
+          left: _edgeInsets, right: _edgeInsets, bottom: _edgeInsets - 5),
       child: Row(
         children: [
           RichText(
