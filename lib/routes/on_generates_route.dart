@@ -3,14 +3,11 @@ import 'package:flutter_amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/screen/home/home_screen.dart';
-import 'package:flutter_amazon_clone/screen/second_page.dart';
 
 Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
   return switch (setting.name) {
     HomeScreen.pageName =>
       FadeTransitionRoute(setting: setting, page: const HomeScreen()),
-    SecondPage.pageName =>
-      FadeTransitionRoute(page: const SecondPage(), setting: setting),
     BottomBar.pageName =>
       FadeTransitionRoute(page: const BottomBar(), setting: setting),
     AuthScreen.pageName =>
