@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/address_box_w.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/app_bar.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/carousel_slider_image_w.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/top_categories_w.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,18 +11,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userAuthProvider = context.watch<UserAuthProvider>();
-
-    return Scaffold(
-      appBar: const CustomAppBar(),
+    return const Scaffold(
+      appBar: CustomAppBar(),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SelectableText(
-              userAuthProvider.user.toString(),
+            AddressBoxW(),
+            SizedBox(
+              height: 10,
             ),
-            const Text(pageName)
+            TopCategoriesW(),
+            SizedBox(
+              height: 10,
+            ),
+            CarouselSliderImageW()
           ],
         ),
       ),
