@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/bottom_bar.dart';
+import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
@@ -57,24 +58,26 @@ class _MainAppState extends State<MainApp> {
     }
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: onGenerateRoutes,
-      theme: ThemeData(
-        scaffoldBackgroundColor: GlobalVariables.backgroundColor,
-        colorScheme: const ColorScheme.light(
-          primary: GlobalVariables.secondaryColor,
-          surface: GlobalVariables.secondaryColor,
+        title: 'Amazon Clone',
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: onGenerateRoutes,
+        theme: ThemeData(
+          scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+          colorScheme: const ColorScheme.light(
+            primary: GlobalVariables.secondaryColor,
+            surface: GlobalVariables.secondaryColor,
+          ),
+          appBarTheme: const AppBarTheme(
+            elevation: 0,
+          ),
+          buttonTheme: const ButtonThemeData(
+              buttonColor: GlobalVariables.secondaryColor),
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-        ),
-        buttonTheme:
-            const ButtonThemeData(buttonColor: GlobalVariables.secondaryColor),
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      initialRoute: context.watch<UserAuthProvider>().user.token.isEmpty
-          ? AuthScreen.pageName
-          : BottomBar.pageName,
-    );
+        initialRoute: context.watch<UserAuthProvider>().user.token.isNotEmpty
+            ? context.watch<UserAuthProvider>().user.type == 'user'
+                ? BottomNavigationBarW.pageName
+                : AdminScreen.pageName
+            : AuthScreen.pageName);
   }
 }

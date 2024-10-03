@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBarW extends StatelessWidget implements PreferredSizeWidget {
   static const String _amazonImgAsset =
       'assets/imgs/amazon_in.png'; // Amazon logo asset
 
-  const CustomAppBar({super.key});
+  const CustomAppBarW({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -30,17 +30,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const Spacer(),
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 25),
-                child: Icon(Icons.notifications_outlined),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Icon(Icons.search),
-              ),
-            ],
+          const Text(
+            'Admin',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),

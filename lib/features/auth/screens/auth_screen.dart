@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/widgets/sign_up_w.dart';
@@ -23,6 +22,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = context.watch<UserAuthProvider>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: GlobalVariables.greyBackgroundCOlor,
       body: SafeArea(
         child: Column(

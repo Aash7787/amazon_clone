@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
-import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
-import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
+import 'package:flutter_amazon_clone/features/admin/screen/posts_screen.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class BottomNavigationBarW extends StatefulWidget {
+  const BottomNavigationBarW({super.key});
 
   static const pageName = 'bottom/bar';
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<BottomNavigationBarW> createState() => _BottomNavigationBarWState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
   int _currentIndex = 0;
 
   static const _iconSize = 28.0;
@@ -20,12 +19,12 @@ class _BottomBarState extends State<BottomBar> {
   static const _borderSideWidth = 5.0;
 
   static const _labelHome = 'Home';
-  static const _labelPerson = 'Home';
-  static const _labelCart = 'Home';
+  static const _labelAnalytics = 'Analytics';
+  static const _labelInbox = 'Inbox';
 
-  var pages = [
-    const HomeScreen(),
-    const AccountScreen(),
+  var pages = <Widget>[
+    const PostsScreen(),
+    const Center(child: Text('Analytics page')),
     const Center(child: Text('Cart page')),
   ];
 
@@ -51,13 +50,13 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.home),
+              child: const Icon(Icons.home_outlined),
             ),
           ),
           BottomNavigationBarItem(
-            //  Person Bar
+            //  Analytics bar
 
-            label: _labelPerson,
+            label: _labelAnalytics,
             icon: Container(
               width: _width,
               decoration: BoxDecoration(
@@ -70,13 +69,12 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.person),
+              child: const Icon(Icons.analytics_outlined),
             ),
           ),
           BottomNavigationBarItem(
-            //  Cart
-
-            label: _labelCart,
+            //  Orders
+            label: _labelInbox,
             icon: Container(
               width: _width,
               decoration: BoxDecoration(
@@ -89,19 +87,7 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Badge(
-                backgroundColor: Colors.white,
-                label: Text(
-                  '2',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                child: Icon(
-                  Icons.shopping_cart_rounded,
-                ),
-              ),
+              child: const Icon(Icons.all_inbox_outlined),
             ),
           ),
         ],
