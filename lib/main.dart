@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/routes/on_generates_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,7 +16,12 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => UserAuthProvider()),
       ],
-      child: const MainApp(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AdminBloc()),
+        ],
+        child: const MainApp(),
+      ),
     ),
   );
 }
@@ -64,8 +71,8 @@ class _MainAppState extends State<MainApp> {
         theme: ThemeData(
           scaffoldBackgroundColor: GlobalVariables.backgroundColor,
           colorScheme: const ColorScheme.light(
-            primary: GlobalVariables.secondaryColor,
-            surface: GlobalVariables.secondaryColor,
+            primary: Color.fromARGB(255, 29, 201, 192),
+            surface: Color.fromARGB(255, 29, 201, 192),
           ),
           appBarTheme: const AppBarTheme(
             elevation: 0,

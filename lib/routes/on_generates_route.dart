@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/features/admin/screen/add_product_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/posts_screen.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
@@ -20,6 +21,8 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
       FadeTransitionRoute(page: const AdminScreen(), setting: setting),
     PostsScreen.pageName =>
       FadeTransitionRoute(page: const PostsScreen(), setting: setting),
+    AddProductScreen.pageName =>
+      FadeTransitionRoute(page: const AddProductScreen(), setting: setting),
     _ => MaterialPageRoute(
         settings: setting,
         builder: (_) => ErrorWidget('Page not found'),

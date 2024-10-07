@@ -5,26 +5,32 @@ typedef OnChange = void Function(String)?;
 class MyTextFormFieldW extends StatelessWidget {
   final String hint;
 
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
 
   static final _grayColor = Colors.grey.shade700;
 
   final bool obscureText;
 
+  final int maxLines;
+
   final ValueChanged<String>? onChanged;
+
+  final TextInputType? keyboardType;
 
   const MyTextFormFieldW(
       {super.key,
       required this.hint,
-      required this.textEditingController,
+      this.textEditingController,
       this.onChanged,
-      this.obscureText = false});
+      this.obscureText = false, this.maxLines = 1, this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: TextFormField(
+        keyboardType: keyboardType,
+        maxLines: maxLines,
         obscureText: obscureText,
         controller: textEditingController,
         onChanged: onChanged,
