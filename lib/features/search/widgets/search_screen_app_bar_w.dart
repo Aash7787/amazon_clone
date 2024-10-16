@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
-class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+class SearchScreenAppBarW extends StatefulWidget implements PreferredSizeWidget {
   static const double _radius = 7.0;
   static const double _appBarPaddingLeft = 15.0;
   static const _appBarHint = 'Search Amazon.in';
 
   static const _borderSideWidth = 1.5;
 
-  const CustomAppBar({super.key});
+  const SearchScreenAppBarW({super.key});
 
   @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
+  State<SearchScreenAppBarW> createState() => _SearchScreenAppBarWState();
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
 }
 
-class _CustomAppBarState extends State<CustomAppBar> {
+class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
   void navigateToSearchScreen(String query) {
     // Navigate to SearchScreen
     Navigator.pushNamed(context, SearchScreen.pageName, arguments: query);
@@ -39,14 +39,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
           Expanded(
             child: Container(
               padding:
-                  const EdgeInsets.only(left: CustomAppBar._appBarPaddingLeft),
+                  const EdgeInsets.only(left: SearchScreenAppBarW._appBarPaddingLeft),
               child: Material(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(CustomAppBar._radius),
+                borderRadius: BorderRadius.circular(SearchScreenAppBarW._radius),
                 child: TextFormField(
                   onFieldSubmitted: navigateToSearchScreen,
                   decoration: InputDecoration(
-                    hintText: CustomAppBar._appBarHint,
+                    hintText: SearchScreenAppBarW._appBarHint,
                     hintStyle: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 17,
@@ -57,19 +57,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
+                        width: SearchScreenAppBarW._borderSideWidth,
                       ),
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
+                        width: SearchScreenAppBarW._borderSideWidth,
                       ),
                     ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
+                        width: SearchScreenAppBarW._borderSideWidth,
                       ),
                     ),
                     prefixIcon: InkWell(

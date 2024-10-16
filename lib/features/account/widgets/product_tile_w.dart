@@ -11,9 +11,10 @@ class ProductTileW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(2.0),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        width: 350,
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           color: Colors.white70,
           border: Border.all(width: _borderWidth, color: Colors.grey.shade400),

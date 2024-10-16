@@ -33,6 +33,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   final _addProductFormKey = GlobalKey<FormState>();
 
+  bool isLoading = false;
+
   @override
   void initState() {
     productNameController = TextEditingController();
@@ -145,10 +147,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: 10,
                 ),
                 const DropDownMenu(),
-                BtnW(
-                  btnText: 'Confirm ',
-                  onTap: _sellProduct,
-                )
+                isLoading
+                    ? const CircularProgressIndicator()
+                    : BtnW(
+                        btnText: 'Confirm',
+                        onTap: _sellProduct,
+                      ),
               ],
             ),
           ),
@@ -157,10 +161,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-  void _sellProduct() {
+  void _sellProduct() async {
     if (_addProductFormKey.currentState!.validate() &&
         context.read<AdminBloc>().images.isNotEmpty) {
       log('$images');
+      setState(() {
+        isLoading = true;
+      });
       AdminService().sellProduct(
           context: context,
           name: productNameController.text,
@@ -171,7 +178,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           images: images);
     } else {
       if (context.read<AdminBloc>().images.isEmpty) {
-        showSnackBar(context, 'Add images');
+        showSnackBar(context, 'Please Add some images');
       } else {
         showSnackBar(context, 'Fill up the fields');
       }

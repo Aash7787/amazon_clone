@@ -13,14 +13,6 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<SelectProductImagesEvent>(_selectProductImages);
   }
 
-  var productCategories = <String>[
-    'mobiles',
-    'Essentials',
-    'Appliances',
-    'Books',
-    'Fashion',
-  ];
-
   List<File> images = [];
 
   // FutureOr<void> _selectProductImages(

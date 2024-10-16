@@ -6,5 +6,6 @@
     "rivaan",
     "signin",
     "signup"
-  ]
+  ],
+  "cmake.ignoreCMakeListsMissing": true
 }

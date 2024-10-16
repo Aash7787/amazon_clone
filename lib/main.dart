@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
@@ -34,57 +35,101 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  bool _isLoading = true;
+  bool _isLoading = true; // Set loading to true initially
+  bool _noNetwork = false; // Set to true if no network is found
 
   @override
   void initState() {
     super.initState();
-    _loadUserToken();
+    _checkNetworkAndLoadUser();
   }
 
-  void _loadUserToken() async {
+  Future<void> _checkNetworkAndLoadUser() async {
+    // Check network status
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    // Check if there's no network
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      setState(() {
+        _noNetwork = true;
+        _isLoading = false; // Loading complete, but no network
+      });
+      return;
+    }
+
+    // If network is available, load user data
     await context.read<UserAuthProvider>().getUserDate(context);
+
     setState(() {
-      _isLoading = false;
+      _isLoading = false; // Loading complete
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    log('${context.read<UserAuthProvider>().user.token} user token');
+    final userProvider = context.watch<UserAuthProvider>();
+    final user = userProvider.user;
 
-    if (_isLoading) {
+    log('User token: ${user.token}');
+
+    // If no network is available, show "No network" message
+    if (_noNetwork) {
+      log('network');
       return Container(
-        color: Colors.white,
         height: double.infinity,
         width: double.infinity,
-        child: Center(
-          child: Image.asset('assets/imgs/amazon_in.png'),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+              image: AssetImage('assets/imgs/no_network.jpg'),
+              fit: BoxFit.fitWidth),
         ),
       );
     }
 
-    return MaterialApp(
-        title: 'Amazon Clone',
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: onGenerateRoutes,
-        theme: ThemeData(
-          scaffoldBackgroundColor: GlobalVariables.backgroundColor,
-          colorScheme: const ColorScheme.light(
-            primary: Color.fromARGB(255, 29, 201, 192),
-            surface: Color.fromARGB(255, 29, 201, 192),
+    // If still loading (fetching user data or checking network), show loading screen
+    if (_isLoading) {
+      log('loading');
+
+      return Container(
+        color: Colors.white,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/imgs/amazon_in.png'),
+              const CircularProgressIndicator()
+            ],
           ),
-          appBarTheme: const AppBarTheme(
-            elevation: 0,
-          ),
-          buttonTheme: const ButtonThemeData(
-              buttonColor: GlobalVariables.secondaryColor),
-          iconTheme: const IconThemeData(color: Colors.black),
         ),
-        initialRoute: context.watch<UserAuthProvider>().user.token.isNotEmpty
-            ? context.watch<UserAuthProvider>().user.type == 'user'
-                ? BottomNavigationBarW.pageName
-                : AdminScreen.pageName
-            : AuthScreen.pageName);
+      );
+    }
+
+    // If everything is loaded, proceed to the appropriate screen based on user type
+    return MaterialApp(
+      title: 'Amazon Clone',
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: onGenerateRoutes,
+      theme: ThemeData(
+        scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromARGB(255, 29, 201, 192),
+          surface: Color.fromARGB(255, 29, 201, 192),
+        ),
+        appBarTheme: const AppBarTheme(elevation: 0),
+        buttonTheme:
+            const ButtonThemeData(buttonColor: GlobalVariables.secondaryColor),
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      // Navigate based on token availability and user type
+      initialRoute: user.token.isNotEmpty
+          ? user.type == 'user'
+              ? BottomNavigationBarW.pageName
+              : AdminScreen.pageName
+          : AuthScreen.pageName,
+    );
   }
 }

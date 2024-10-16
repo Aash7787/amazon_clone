@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:developer'; // Import the log function for debugging
 
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/err/error_handling.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/constants/utils.dart';
+import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,10 +71,82 @@ class AdminService {
       httpErrorHandle(
         response: response,
         context: context,
-        onSuccess: () {
+        onSuccess: () async {
           log('Product added successfully'); // Log success
           showSnackBar(context, 'Product added successfully');
-          Navigator.pop(context); // Close the screen on success
+
+          context.read<AdminBloc>().images.clear();
+          await Future.delayed(const Duration(seconds: 1),
+              () => Navigator.pop(context)); // Close the screen on success
+        },
+      );
+    } catch (e) {
+      log('Error occurred: $e'); // Log any caught error
+      // Show error message if an exception occurs
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = context.read<UserAuthProvider>();
+    List<Product> productList = [];
+    try {
+      var response = await http.get(
+        Uri.parse('$uri/admin/get-products'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          xToken: userProvider.user.token,
+        },
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          for (var i = 0; i < jsonDecode(response.body).length; i++) {
+            productList.add(
+              Product.fromJson(
+                jsonEncode(
+                  jsonDecode(response.body)[i],
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return productList;
+  }
+
+  void deleteProduct(
+      {required BuildContext context,
+      required Product product,
+      required VoidCallback onSuccess}) async {
+    final userProvider = context.read<UserAuthProvider>();
+
+    try {
+      // Make the POST request to your server
+      var response = await http.post(
+        Uri.parse('$uri/admin/delete-product'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          xToken: userProvider.user.token,
+        },
+        body: jsonEncode({'id': product.id}), // Convert product to JSON
+      );
+
+      log('Received response with status code: ${response.statusCode}'); // Log the status code
+
+      // Handle HTTP error response
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () async {
+          showSnackBar(context, 'Deleted');
+          onSuccess();
+
+          // Close the screen on success
         },
       );
     } catch (e) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
-import 'package:flutter_amazon_clone/features/admin/screen/posts_screen.dart';
+import 'package:flutter_amazon_clone/features/admin/screen/product_screen.dart';
 
 class BottomNavigationBarW extends StatefulWidget {
   const BottomNavigationBarW({super.key});
@@ -23,7 +23,7 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
   static const _labelInbox = 'Inbox';
 
   var pages = <Widget>[
-    const PostsScreen(),
+    const ProductScreen(),
     const Center(child: Text('Analytics page')),
     const Center(child: Text('Cart page')),
   ];
