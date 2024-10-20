@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
+import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/cart/screen/cart_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavigationBarW extends StatefulWidget {
   const BottomNavigationBarW({super.key});
@@ -26,11 +29,12 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
   var pages = [
     const HomeScreen(),
     const AccountScreen(),
-    const Center(child: Text('Cart page')),
+    const CartScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final userCartLen = context.watch<UserAuthProvider>().user.cart.length;
     return Scaffold(
       body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -51,7 +55,7 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.home),
+              child: const Icon(Icons.home_outlined),
             ),
           ),
           BottomNavigationBarItem(
@@ -70,7 +74,7 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.person),
+              child: const Icon(Icons.person_2_outlined),
             ),
           ),
           BottomNavigationBarItem(
@@ -89,17 +93,17 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
                   ),
                 ),
               ),
-              child: const Badge(
+              child: Badge(
                 backgroundColor: Colors.white,
                 label: Text(
-                  '2',
-                  style: TextStyle(
+                  userCartLen.toString(),
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                child: Icon(
-                  Icons.shopping_cart_rounded,
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
                 ),
               ),
             ),

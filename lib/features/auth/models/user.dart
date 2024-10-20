@@ -8,7 +8,9 @@ class User {
   final String type;
   final String token;
   final String email;
+  final List<dynamic> cart;
   User({
+    required this.cart,
     required this.id,
     required this.name,
     required this.password,
@@ -26,6 +28,7 @@ class User {
     String? type,
     String? token,
     String? email,
+    List<dynamic>? cart,
   }) {
     return User(
       id: id ?? this.id,
@@ -35,6 +38,7 @@ class User {
       type: type ?? this.type,
       token: token ?? this.token,
       email: email ?? this.email,
+      cart: cart ?? this.cart,
     );
   }
 
@@ -47,6 +51,7 @@ class User {
       'type': type,
       'token': token,
       'email': email,
+      'cart': cart,
     };
   }
 
@@ -59,6 +64,12 @@ class User {
       type: map['type'] ?? '',
       token: map['token'] ?? '',
       email: map['email'] ?? '',
+      //  cart: [],
+      cart: List<Map<String, dynamic>>.from(
+        map['cart']?.map(
+          (x) => Map<String, dynamic>.from(x),
+        ),
+      ),
     );
   }
 
@@ -74,25 +85,25 @@ class User {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.id == id &&
-      other.name == name &&
-      other.password == password &&
-      other.address == address &&
-      other.type == type &&
-      other.token == token &&
-      other.email == email;
+        other.id == id &&
+        other.name == name &&
+        other.password == password &&
+        other.address == address &&
+        other.type == type &&
+        other.token == token &&
+        other.email == email;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      password.hashCode ^
-      address.hashCode ^
-      type.hashCode ^
-      token.hashCode ^
-      email.hashCode;
+        name.hashCode ^
+        password.hashCode ^
+        address.hashCode ^
+        type.hashCode ^
+        token.hashCode ^
+        email.hashCode;
   }
 }

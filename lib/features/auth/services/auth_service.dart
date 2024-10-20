@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/err/error_handling.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
+import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 
 import 'package:flutter_amazon_clone/constants/utils.dart';
@@ -27,6 +27,7 @@ class AuthService {
           address: '',
           type: '',
           email: email,
+          cart:[] ,
           token: '');
       var response = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),

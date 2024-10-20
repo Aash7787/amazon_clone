@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/common/widgets/cached_network_image_w.dart';
 
 class ProductTileW extends StatelessWidget {
   const ProductTileW({super.key, required this.image});
@@ -24,10 +25,9 @@ class ProductTileW extends StatelessWidget {
           padding: const EdgeInsets.all(
             8,
           ),
-          child: Image.network(
-            image,
-            fit: BoxFit.fitHeight,
-            // width: 180,
+          child:CachedNetworkImageW(
+            imageUrl: image, // URL of the image
+            
           ),
         ),
       ),

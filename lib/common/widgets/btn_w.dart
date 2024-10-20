@@ -10,17 +10,31 @@ class BtnW extends StatelessWidget {
 
   final double? fontSize;
 
-  const BtnW({super.key, this.onTap, required this.btnText, this.fontSize});
+  final Color btnColor;
+
+  final Color textColor;
+
+  final double vertical, horizontal;
+
+  const BtnW(
+      {super.key,
+      this.onTap,
+      required this.btnText,
+      this.fontSize,
+      this.btnColor = GlobalVariables.secondaryColor,
+      this.horizontal = 8,
+      this.vertical = 8,
+      this.textColor = GlobalVariables.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
       child: InkWell(
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: GlobalVariables.secondaryColor,
+            color: btnColor,
             borderRadius: BorderRadius.circular(
               borderRadius,
             ),
@@ -31,7 +45,7 @@ class BtnW extends StatelessWidget {
               child: Text(
                 btnText,
                 style: TextStyle(
-                  color: GlobalVariables.backgroundColor,
+                  color: textColor,
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                   letterSpacing: 0.5,

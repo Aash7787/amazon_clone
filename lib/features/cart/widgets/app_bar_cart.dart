@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
-class SearchScreenAppBarW extends StatefulWidget implements PreferredSizeWidget {
+String globalInitialValue = ''; 
+
+class AppBarCart extends StatefulWidget implements PreferredSizeWidget {
   static const double _radius = 7.0;
   static const double _appBarPaddingLeft = 15.0;
   static const _appBarHint = 'Search Amazon.in';
 
   static const _borderSideWidth = 1.5;
 
-  const SearchScreenAppBarW({super.key});
+  const AppBarCart({super.key});
 
   @override
-  State<SearchScreenAppBarW> createState() => _SearchScreenAppBarWState();
+  State<AppBarCart> createState() => _AppBarCartState();
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
 }
 
-class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
+class _AppBarCartState extends State<AppBarCart> {
   void navigateToSearchScreen(String query) {
     // Navigate to SearchScreen
     Navigator.pushNamed(context, SearchScreen.pageName, arguments: query);
@@ -41,16 +42,14 @@ class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
           Expanded(
             child: Container(
               padding:
-                  const EdgeInsets.only(left: SearchScreenAppBarW._appBarPaddingLeft),
+                  const EdgeInsets.only(left: AppBarCart._appBarPaddingLeft),
               child: Material(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(SearchScreenAppBarW._radius),
-                child: TextFormField(
-                  // controller: ,
-                  initialValue: globalInitialValue,
+                borderRadius: BorderRadius.circular(AppBarCart._radius),
+                child: TextFormField(                  
                   onFieldSubmitted: navigateToSearchScreen,
                   decoration: InputDecoration(
-                    hintText: SearchScreenAppBarW._appBarHint,
+                    hintText: AppBarCart._appBarHint,
                     hintStyle: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 17,
@@ -61,19 +60,19 @@ class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: SearchScreenAppBarW._borderSideWidth,
+                        width: AppBarCart._borderSideWidth,
                       ),
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: SearchScreenAppBarW._borderSideWidth,
+                        width: AppBarCart._borderSideWidth,
                       ),
                     ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.black54,
-                        width: SearchScreenAppBarW._borderSideWidth,
+                        width: AppBarCart._borderSideWidth,
                       ),
                     ),
                     prefixIcon: InkWell(

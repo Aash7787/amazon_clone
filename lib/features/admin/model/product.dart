@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_amazon_clone/features/admin/model/rating.dart';
 
 class Product {
   final String name;
@@ -10,7 +11,9 @@ class Product {
   final String category;
   final List<String> images;
   final String? id;
+  final List<Rating>? rating;
   Product({
+    this.rating,
     required this.name,
     required this.description,
     required this.price,
@@ -49,6 +52,7 @@ class Product {
       'category': category,
       'images': images,
       '_id': id,
+      // 'ratings': rating?.map((rating) => rating.toMap()).toList(),
     };
   }
 
@@ -61,12 +65,21 @@ class Product {
       category: map['category'] ?? '',
       images: List<String>.from(map['images']),
       id: map['_id'],
+
+      rating: map['ratings'] != null
+          ? List<Rating>.from(
+              map['ratings']?.map(
+                (x) => Rating.fromMap(x),
+              ),
+            )
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromJson(String source) => Product.fromMap(json.decode(source));
+  factory Product.fromJson(String source) =>
+      Product.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -76,25 +89,25 @@ class Product {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Product &&
-      other.name == name &&
-      other.description == description &&
-      other.price == price &&
-      other.quantity == quantity &&
-      other.category == category &&
-      listEquals(other.images, images) &&
-      other.id == id;
+        other.name == name &&
+        other.description == description &&
+        other.price == price &&
+        other.quantity == quantity &&
+        other.category == category &&
+        listEquals(other.images, images) &&
+        other.id == id;
   }
 
   @override
   int get hashCode {
     return name.hashCode ^
-      description.hashCode ^
-      price.hashCode ^
-      quantity.hashCode ^
-      category.hashCode ^
-      images.hashCode ^
-      id.hashCode;
+        description.hashCode ^
+        price.hashCode ^
+        quantity.hashCode ^
+        category.hashCode ^
+        images.hashCode ^
+        id.hashCode;
   }
 }

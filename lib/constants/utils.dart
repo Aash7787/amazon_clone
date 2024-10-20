@@ -8,6 +8,7 @@ void showSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(text),
+      duration: const Duration(milliseconds: 800),
     ),
   );
 }
@@ -28,4 +29,3 @@ Future<List<File>> pickImages(BuildContext context) async {
   }
   return images;
 }
-

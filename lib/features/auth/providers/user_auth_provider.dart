@@ -14,12 +14,18 @@ class UserAuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserFromModel(User user){
+    _user = user;
+    notifyListeners();
+  }
+
   User _user = User(
       id: 'No id found',
       name: '',
       password: '',
       address: '',
       type: '',
+      cart: [],
       token: '',
       email: '');
 
@@ -80,7 +86,7 @@ class UserAuthProvider extends ChangeNotifier {
         context: context);
   }
 
-  Future<void> getUserDate(BuildContext context) async{
+  Future<void> getUserDate(BuildContext context) async {
     return await authService.getUserData(context);
   }
 

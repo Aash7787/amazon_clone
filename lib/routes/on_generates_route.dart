@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/add_product_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/product_screen.dart';
+import 'package:flutter_amazon_clone/features/cart/screen/cart_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/category_deals_screen.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
+import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
+import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
 Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
@@ -35,6 +38,13 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
           searchQuery: setting.arguments as String,
         ),
         setting: setting),
+    ProductDetailScreen.pageName => FadeTransitionRoute(
+        page: ProductDetailScreen(
+          product: setting.arguments as Product,
+        ),
+        setting: setting),
+    CartScreen.pageName =>
+      FadeTransitionRoute(page: const CartScreen(), setting: setting),
     _ => MaterialPageRoute(
         settings: setting,
         builder: (_) => ErrorWidget('Page not found'),

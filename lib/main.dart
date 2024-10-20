@@ -3,7 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/bottom_navigation_bar_w.dart';
+import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';

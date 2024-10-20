@@ -3,6 +3,7 @@ import 'package:flutter_amazon_clone/features/account/widgets/product_tile_w.dar
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/home/service/home_services.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar_for_category_w.dart';
+import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
 
 class CategoryDealsScreen extends StatefulWidget {
   const CategoryDealsScreen({super.key, required this.category});
@@ -33,7 +34,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
         category: widget.category,
       ),
       body: productList == null
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 Container(
@@ -46,7 +47,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 170,
+                  height: 190,
                   child: GridView.builder(
                     itemCount: productList!.length,
                     padding: const EdgeInsets.only(left: 10),
@@ -56,15 +57,22 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                             childAspectRatio: 1.4,
                             mainAxisSpacing: 5,
                             crossAxisCount: 1),
-                    itemBuilder: (context, index) => Column(
-                      children: [
-                        Expanded(
-                          child: ProductTileW(
-                            image: productList![index].images[0],
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ProductDetailScreen.pageName,
+                            arguments: productList![index]);
+                      },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ProductTileW(
+                              image: productList![index].images[0],
+                            ),
                           ),
-                        ),
-                        Text(productList![index].name)
-                      ],
+                          Text(productList![index].name)
+                        ],
+                      ),
                     ),
                   ),
                 )

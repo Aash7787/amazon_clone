@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SelectTextW extends StatelessWidget {
-  const SelectTextW(
-    this.text, {
-    super.key,
-  });
+  final FontWeight? fontWeight;
+
+  final double fontSize;
+
+  const SelectTextW(this.text,
+      {super.key, this.fontWeight, this.fontSize = 18});
 
   final String text;
 
@@ -14,8 +16,9 @@ class SelectTextW extends StatelessWidget {
       text.toUpperCase(),
       maxLines: 2,
       minLines: 1,
-      style: const TextStyle(
-        fontSize: 18,
+      style: TextStyle(
+        fontWeight: fontWeight,
+        fontSize: fontSize,
         overflow: TextOverflow.ellipsis,
       ),
     );
