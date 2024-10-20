@@ -7,7 +7,7 @@ class TopCategoriesW extends StatelessWidget {
 
   void navigateToCategoryPage(BuildContext context, String category) {
     Navigator.of(context)
-        .pushNamed(CategoryDealsScreen.pageName, arguments: category);
+        .pushNamed(CategoryDealsScreen.routeName, arguments: category);
   }
 
   @override

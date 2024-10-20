@@ -15,7 +15,7 @@ double myRating = 0;
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.product});
 
-  static const pageName = 'product/detail/screen';
+  static const routeName = 'product/detail/screen';
 
   final Product product;
 

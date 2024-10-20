@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
+import 'package:flutter_amazon_clone/features/address/screen/address_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/cart/widgets/app_bar_cart.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
-  static const pageName = 'cart/screen';
+  static const routeName = 'cart/screen';
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,9 @@ class CartScreen extends StatelessWidget {
               btnText: 'Proceed to Buy (${user.cart.length} items)',
               btnColor: Colors.yellow.shade600,
               textColor: Colors.black,
+              onTap: () {
+                Navigator.pushNamed(context, AddressScreen.routeName);
+              },
             ),
             const SizedBox(height: 10),
             Container(
@@ -41,7 +45,7 @@ class CartScreen extends StatelessWidget {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: CartProductW(
-                  quantity:user.cart[index]['quantity'] ,
+                  quantity: user.cart[index]['quantity'],
                   product: Product.fromMap(
                     user.cart[index]['product'],
                   ),

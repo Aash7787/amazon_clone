@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
 
-  static const pageName = 'addProductScreen';
+  static const routeName = 'addProductScreen';
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();

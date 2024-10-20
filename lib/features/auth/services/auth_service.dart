@@ -27,7 +27,7 @@ class AuthService {
           address: '',
           type: '',
           email: email,
-          cart:[] ,
+          cart: [],
           token: '');
       var response = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),
@@ -70,7 +70,7 @@ class AuthService {
           await pref.setString(xToken, jsonDecode(response.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
             context,
-            BottomNavigationBarW.pageName,
+            BottomNavigationBarW.routeName,
             (route) => false,
           );
           showSnackBar(context, 'Welcome $email');

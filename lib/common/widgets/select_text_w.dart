@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 class SelectTextW extends StatelessWidget {
   final FontWeight? fontWeight;
 
-  final double fontSize;
-
-  const SelectTextW(this.text,
-      {super.key, this.fontWeight, this.fontSize = 18});
-
   final String text;
+  final int? maxLines;
+  final double fontSize;
+  final int? minLines;
+  const SelectTextW(this.text,
+      {super.key,
+      this.fontWeight,
+      this.fontSize = 18,
+      this.maxLines = 2,
+      this.minLines = 1});
 
   @override
   Widget build(BuildContext context) {
     return SelectableText(
       text.toUpperCase(),
-      maxLines: 2,
-      minLines: 1,
+      maxLines: maxLines,
+      minLines: minLines,
       style: TextStyle(
         fontWeight: fontWeight,
         fontSize: fontSize,

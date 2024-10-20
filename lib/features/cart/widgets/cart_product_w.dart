@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
+import 'package:flutter_amazon_clone/features/product_detail/service/product_detail_service.dart';
 
-class CartProductW extends StatelessWidget {
+class CartProductW extends StatefulWidget {
   const CartProductW(
       {super.key, required this.product, required this.quantity});
 
@@ -14,20 +15,18 @@ class CartProductW extends StatelessWidget {
   final num quantity;
 
   @override
-  Widget build(BuildContext context) {
-    double totalRating = 0;
-    for (var i = 0; i < product.rating!.length; i++) {
-      totalRating += product.rating![i].rating;
-    }
-    double avgRating = 0;
-    if (product.rating!.isNotEmpty) {
-      avgRating = totalRating / product.rating!.length;
-    }
+  State<CartProductW> createState() => _CartProductWState();
+}
 
+class _CartProductWState extends State<CartProductW> {
+  final productDetailService = ProductDetailService();
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetailScreen.pageName,
-            arguments: product);
+        Navigator.pushNamed(context, ProductDetailScreen.routeName,
+            arguments: widget.product);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +36,7 @@ class CartProductW extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: CachedNetworkImage(
-                  imageUrl: product.images[0], // URL of the image
+                  imageUrl: widget.product.images[0], // URL of the image
                   fit: BoxFit.fitHeight,
                   height: 135,
                   width: 135,
@@ -52,9 +51,10 @@ class CartProductW extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(top: topPadding),
+                    padding:
+                        const EdgeInsets.only(top: CartProductW.topPadding),
                     child: Text(
-                      product.name,
+                      widget.product.name,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -62,20 +62,22 @@ class CartProductW extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: topPadding),
+                    padding:
+                        const EdgeInsets.only(top: CartProductW.topPadding),
                     child: Text(
-                      '\$ ${product.price}',
+                      '\$ ${widget.product.price}',
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                       maxLines: 2,
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(top: topPadding - 3),
+                    padding: EdgeInsets.only(top: CartProductW.topPadding - 3),
                     child: Text('Eligible for free Shipping'),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(top: topPadding - 3, bottom: 10),
+                    padding: EdgeInsets.only(
+                        top: CartProductW.topPadding - 3, bottom: 10),
                     child: Text(
                       'In Stock',
                       style: TextStyle(color: Colors.teal),
@@ -93,15 +95,16 @@ class CartProductW extends StatelessWidget {
             child: Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: _decreaseQuantity,
                   child: Container(
                     width: 35,
                     height: 35,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5)),
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                      ),
                     ),
                     alignment: Alignment.center,
                     child: const Icon(
@@ -121,11 +124,11 @@ class CartProductW extends StatelessWidget {
                   width: 35,
                   height: 35,
                   child: Center(
-                    child: Text('$quantity'),
+                    child: Text('${widget.quantity}'),
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: _incrementQuantity,
                   child: Container(
                     width: 35,
                     height: 35,
@@ -149,6 +152,20 @@ class CartProductW extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void _incrementQuantity() {
+    productDetailService.addToCart(
+      context: context,
+      product: widget.product,
+    );
+  }
+
+  void _decreaseQuantity() {
+    productDetailService.removeToCart(
+      context: context,
+      product: widget.product,
     );
   }
 }

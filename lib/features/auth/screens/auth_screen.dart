@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
-  static const pageName = 'auth_screen';
+  static const routeName = 'auth_screen';
 
   static const _welcomeT = 'Welcome';
 

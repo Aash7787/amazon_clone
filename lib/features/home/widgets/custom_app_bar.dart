@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
-String globalInitialValue = ''; 
+String globalInitialValue = '';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   static const double _radius = 7.0;
@@ -23,7 +23,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   void navigateToSearchScreen(String query) {
     // Navigate to SearchScreen
-    Navigator.pushNamed(context, SearchScreen.pageName, arguments: query);
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
     globalInitialValue = query;
   }
 
@@ -46,7 +46,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               child: Material(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(CustomAppBar._radius),
-                child: TextFormField(                  
+                child: TextFormField(
                   onFieldSubmitted: navigateToSearchScreen,
                   decoration: InputDecoration(
                     hintText: CustomAppBar._appBarHint,

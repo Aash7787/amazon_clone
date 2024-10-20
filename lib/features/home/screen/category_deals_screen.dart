@@ -8,7 +8,7 @@ import 'package:flutter_amazon_clone/features/product_detail/screens/product_det
 class CategoryDealsScreen extends StatefulWidget {
   const CategoryDealsScreen({super.key, required this.category});
 
-  static const pageName = 'category-page';
+  static const routeName = 'category-page';
 
   final String category;
 
@@ -60,7 +60,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         Navigator.pushNamed(
-                            context, ProductDetailScreen.pageName,
+                            context, ProductDetailScreen.routeName,
                             arguments: productList![index]);
                       },
                       child: Column(

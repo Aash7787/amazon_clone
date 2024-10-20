@@ -5,7 +5,7 @@ import 'package:flutter_amazon_clone/features/admin/screen/product_screen.dart';
 class BottomNavigationBarW extends StatefulWidget {
   const BottomNavigationBarW({super.key});
 
-  static const pageName = 'bottom/bar';
+  static const routeName = 'bottom/bar';
 
   @override
   State<BottomNavigationBarW> createState() => _BottomNavigationBarWState();

@@ -127,9 +127,9 @@ class _MainAppState extends State<MainApp> {
       // Navigate based on token availability and user type
       initialRoute: user.token.isNotEmpty
           ? user.type == 'user'
-              ? BottomNavigationBarW.pageName
-              : AdminScreen.pageName
-          : AuthScreen.pageName,
+              ? BottomNavigationBarW.routeName
+              : AdminScreen.routeName
+          : AuthScreen.routeName,
     );
   }
 }

@@ -24,7 +24,7 @@ class SearchProduct extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetailScreen.pageName,
+        Navigator.pushNamed(context, ProductDetailScreen.routeName,
             arguments: product);
       },
       child: Row(

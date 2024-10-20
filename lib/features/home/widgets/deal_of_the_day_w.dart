@@ -107,7 +107,7 @@ class _DealOfTheDayWState extends State<DealOfTheDayW> {
   }
 
   void _navigateToDetailScreen() {
-    Navigator.pushNamed(context, ProductDetailScreen.pageName,
+    Navigator.pushNamed(context, ProductDetailScreen.routeName,
         arguments: product);
   }
 }

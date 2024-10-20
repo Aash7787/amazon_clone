@@ -10,6 +10,35 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailService {
+  void removeToCart({
+    required BuildContext context,
+    required Product product,
+  }) async {
+    final userProvider = context.read<UserAuthProvider>();
+    try {
+      var response = await delete(
+        Uri.parse('$uri/api/remove-from-cart/${product.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          xToken: userProvider.user.token,
+        },
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          var user = userProvider.user.copyWith(
+            cart: jsonDecode(response.body)['cart'],
+          );
+          userProvider.setUserFromModel(user);
+          showSnackBar(context, 'Removed to cart');
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, 'Something went wrong');
+    }
+  }
+
   void addToCart({
     required BuildContext context,
     required Product product,

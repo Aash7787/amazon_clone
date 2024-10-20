@@ -10,7 +10,7 @@ import 'package:flutter_amazon_clone/features/admin/widgets/floating_action_btn_
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
 
-  static const pageName = 'postsScreen';
+  static const routeName = 'postsScreen';
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();

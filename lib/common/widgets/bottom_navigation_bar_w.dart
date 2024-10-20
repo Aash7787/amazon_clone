@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class BottomNavigationBarW extends StatefulWidget {
   const BottomNavigationBarW({super.key});
 
-  static const pageName = 'bottom/bar';
+  static const routeName = 'bottom/bar';
 
   @override
   State<BottomNavigationBarW> createState() => _BottomNavigationBarWState();

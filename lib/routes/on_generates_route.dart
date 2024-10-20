@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/features/address/screen/address_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/add_product_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
@@ -14,40 +15,44 @@ import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
 Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
   return switch (setting.name) {
-    HomeScreen.pageName =>
+    HomeScreen.routeName =>
       FadeTransitionRoute(page: const HomeScreen(), setting: setting),
-    BottomNavigationBarW.pageName =>
+    BottomNavigationBarW.routeName =>
       FadeTransitionRoute(page: const BottomNavigationBarW(), setting: setting),
-    AuthScreen.pageName =>
+    AuthScreen.routeName =>
       FadeTransitionRoute(page: const AuthScreen(), setting: setting),
-    AccountScreen.pageName =>
+    AccountScreen.routeName =>
       FadeTransitionRoute(page: const AccountScreen(), setting: setting),
-    AdminScreen.pageName =>
+    AdminScreen.routeName =>
       FadeTransitionRoute(page: const AdminScreen(), setting: setting),
-    ProductScreen.pageName =>
+    ProductScreen.routeName =>
       FadeTransitionRoute(page: const ProductScreen(), setting: setting),
-    AddProductScreen.pageName =>
+    AddProductScreen.routeName =>
       FadeTransitionRoute(page: const AddProductScreen(), setting: setting),
-    CategoryDealsScreen.pageName => FadeTransitionRoute(
+    CategoryDealsScreen.routeName => FadeTransitionRoute(
         page: CategoryDealsScreen(
           category: setting.arguments as String,
         ),
         setting: setting),
-    SearchScreen.pageName => FadeTransitionRoute(
+    SearchScreen.routeName => FadeTransitionRoute(
         page: SearchScreen(
           searchQuery: setting.arguments as String,
         ),
         setting: setting),
-    ProductDetailScreen.pageName => FadeTransitionRoute(
+    ProductDetailScreen.routeName => FadeTransitionRoute(
         page: ProductDetailScreen(
           product: setting.arguments as Product,
         ),
         setting: setting),
-    CartScreen.pageName =>
+    CartScreen.routeName =>
       FadeTransitionRoute(page: const CartScreen(), setting: setting),
+    AddressScreen.routeName =>
+      FadeTransitionRoute(page: const AddressScreen(), setting: setting),
     _ => MaterialPageRoute(
         settings: setting,
-        builder: (_) => ErrorWidget('Page not found'),
+        builder: (_) => ErrorWidget(
+          'Page not found',
+        ),
       )
   };
 }

@@ -8,7 +8,7 @@ import 'package:flutter_amazon_clone/features/home/widgets/top_categories_w.dart
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const pageName = 'home_screen';
+  static const routeName = 'home_screen';
 
   @override
   Widget build(BuildContext context) {

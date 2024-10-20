@@ -3,7 +3,8 @@ import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
 
-class SearchScreenAppBarW extends StatefulWidget implements PreferredSizeWidget {
+class SearchScreenAppBarW extends StatefulWidget
+    implements PreferredSizeWidget {
   static const double _radius = 7.0;
   static const double _appBarPaddingLeft = 15.0;
   static const _appBarHint = 'Search Amazon.in';
@@ -22,7 +23,7 @@ class SearchScreenAppBarW extends StatefulWidget implements PreferredSizeWidget 
 class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
   void navigateToSearchScreen(String query) {
     // Navigate to SearchScreen
-    Navigator.pushNamed(context, SearchScreen.pageName, arguments: query);
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
     globalInitialValue = query;
   }
 
@@ -40,11 +41,12 @@ class _SearchScreenAppBarWState extends State<SearchScreenAppBarW> {
         children: [
           Expanded(
             child: Container(
-              padding:
-                  const EdgeInsets.only(left: SearchScreenAppBarW._appBarPaddingLeft),
+              padding: const EdgeInsets.only(
+                  left: SearchScreenAppBarW._appBarPaddingLeft),
               child: Material(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(SearchScreenAppBarW._radius),
+                borderRadius:
+                    BorderRadius.circular(SearchScreenAppBarW._radius),
                 child: TextFormField(
                   // controller: ,
                   initialValue: globalInitialValue,

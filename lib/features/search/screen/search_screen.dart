@@ -9,7 +9,7 @@ import 'package:flutter_amazon_clone/features/search/widgets/search_screen_app_b
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key, required this.searchQuery});
 
-  static const pageName = 'searchScreen';
+  static const routeName = 'searchScreen';
 
   final String searchQuery;
 
@@ -43,12 +43,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   height: 10,
                 ),
                 Expanded(
-                    child: ListView.builder(
-                  itemCount: products!.length,
-                  itemBuilder: (context, index) => SearchProduct(
-                    product: products![index],
+                  child: ListView.builder(
+                    itemCount: products!.length,
+                    itemBuilder: (context, index) => SearchProduct(
+                      product: products![index],
+                    ),
                   ),
-                ),)
+                )
               ],
             ),
     );

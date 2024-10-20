@@ -10,7 +10,7 @@ class FloatingActionBtnW extends StatelessWidget {
       shape: const CircleBorder(),
       backgroundColor: const Color.fromARGB(255, 29, 201, 192),
       onPressed: () {
-        Navigator.of(context).pushNamed(AddProductScreen.pageName);
+        Navigator.of(context).pushNamed(AddProductScreen.routeName);
       },
       tooltip: 'Add a product',
       child: const Icon(Icons.add),
