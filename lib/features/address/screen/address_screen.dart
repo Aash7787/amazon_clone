@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/select_text_w.dart';
 import 'package:flutter_amazon_clone/features/address/widgets/address_app_bar.dart';
 import 'package:flutter_amazon_clone/features/address/widgets/address_text_form_field.dart';
-import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pay/pay.dart';
+
+import '../payment_configurations/payment_configurations.dart';
 
 class AddressScreen extends StatelessWidget {
   const AddressScreen({super.key});
@@ -13,8 +13,6 @@ class AddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Future<PaymentConfiguration> googlePayConfigFuture =
-        PaymentConfiguration.fromAsset('gpay.json');
     const address = 'context.watch<UserAuthProvider>().user.address';
     return Scaffold(
       appBar: const AddressAppBar(),
@@ -59,22 +57,20 @@ class AddressScreen extends StatelessWidget {
               ],
             ),
           const Expanded(
+            flex: 20,
             child: AddressTextFormField(),
           ),
-          FutureBuilder<PaymentConfiguration>(
-              future: googlePayConfigFuture,
-              builder: (context, snapshot) => snapshot.hasData
-                  ? GooglePayButton(
-                      paymentConfiguration: snapshot.data!,
-                      paymentItems: const [],
-                      type: GooglePayButtonType.buy,
-                      margin: const EdgeInsets.only(top: 15.0),
-                      onPaymentResult: (result) => Text(result.toString()),
-                      loadingIndicator: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : const SizedBox.shrink()),
+          const Spacer(
+            flex: 2,
+          ),
+          GooglePayButton(
+            paymentConfiguration:
+                PaymentConfiguration.fromJsonString(defaultGooglePay),
+            paymentItems: const [],
+          ),
+          const Spacer(
+            flex: 13,
+          ),
         ],
       ),
     );

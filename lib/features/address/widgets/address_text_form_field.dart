@@ -66,14 +66,6 @@ class _AddressTextFormFieldState extends State<AddressTextFormField> {
               textEditingController: _cityController,
             ),
           ),
-          const Spacer(),
-          const Spacer(),
-          const Spacer(),
-          const Spacer(),
-          const Spacer(),
-          const Spacer(),
-          const Spacer(),
-          const Spacer()
         ],
       ),
     );
