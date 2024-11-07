@@ -6,12 +6,14 @@ class CachedNetworkImageW extends StatelessWidget {
     super.key,
     required this.imageUrl,
     this.width = 140,
-    this.fit = BoxFit.fill,
+    this.fit = BoxFit.fill, this.height,
   });
 
   final BoxFit? fit;
 
   final double width;
+
+  final double? height;
 
   final String imageUrl;
 
@@ -20,7 +22,7 @@ class CachedNetworkImageW extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl, // URL of the image
       fit: fit,
-      // height: 250,
+      height: height,
       width: width,
       placeholder: (context, url) => const Center(
         child: CircularProgressIndicator(),

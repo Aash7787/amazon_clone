@@ -8,7 +8,8 @@ void showSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(text),
-      duration: const Duration(milliseconds: 800),
+      // duration: const Duration(milliseconds: 800),
+      duration: const Duration(seconds: 5),
     ),
   );
 }

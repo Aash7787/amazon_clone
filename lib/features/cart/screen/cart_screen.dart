@@ -9,14 +9,28 @@ import 'package:flutter_amazon_clone/features/cart/widgets/cart_subtotal.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/address_box_w.dart';
 import 'package:provider/provider.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
   static const routeName = 'cart/screen';
 
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserAuthProvider>().user;
+
+
+    num sum = 0;
+    user.cart
+        .map(
+          (e) => sum += e['quantity'] * e['product']['price'] as num,
+        )
+        .toList();
 
     return Scaffold(
       appBar: const AppBarCart(),
@@ -29,9 +43,7 @@ class CartScreen extends StatelessWidget {
               btnText: 'Proceed to Buy (${user.cart.length} items)',
               btnColor: Colors.yellow.shade600,
               textColor: Colors.black,
-              onTap: () {
-                Navigator.pushNamed(context, AddressScreen.routeName);
-              },
+              onTap: () => _navigateToAddress(sum),
             ),
             const SizedBox(height: 10),
             Container(
@@ -56,5 +68,9 @@ class CartScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToAddress(num sum) {
+    Navigator.pushNamed(context, AddressScreen.routeName, arguments: sum);
   }
 }

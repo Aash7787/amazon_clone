@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/common/widgets/cached_network_image_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/select_text_w.dart';
-import 'package:flutter_amazon_clone/features/account/widgets/product_tile_w.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/service/admin_service.dart';
 
@@ -33,8 +33,11 @@ class _CustomGridViewState extends State<CustomGridView> {
 
     return GridView.builder(
       itemCount: widget.productList.length,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisExtent: 350,
+      ),
+      shrinkWrap: true,
       itemBuilder: (context, index) => GirdViewItemBuilder(
         onPressed: () => deleteProduct(widget.productList[index], index),
         product: widget.productList[index],
@@ -52,28 +55,34 @@ class GirdViewItemBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ProductTileW(
-            image: product.images[0],
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Column(
+        children: [
+          Expanded(
+            child: CachedNetworkImageW(
+              width: double.infinity,
+              fit: BoxFit.fill,
+              imageUrl: product.images[0],
+              // height: ,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 4, right: 0),
-          child: Row(
-            children: [
-              Expanded(
-                child: SelectTextW(product.name),
-              ),
-              IconButton(
-                onPressed: onPressed,
-                icon: const Icon(Icons.delete),
-              )
-            ],
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SelectTextW(product.name),
+                ),
+                IconButton(
+                  onPressed: onPressed,
+                  icon: const Icon(Icons.delete),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

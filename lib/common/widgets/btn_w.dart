@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 
 class BtnW extends StatelessWidget {
-  static const double borderRadius = 4;
+  final double borderRadius;
 
   final GestureTapCallback? onTap;
 
@@ -19,6 +19,7 @@ class BtnW extends StatelessWidget {
   const BtnW(
       {super.key,
       this.onTap,
+      this.borderRadius = 4,
       required this.btnText,
       this.fontSize,
       this.btnColor = GlobalVariables.secondaryColor,

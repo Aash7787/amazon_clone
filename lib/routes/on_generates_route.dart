@@ -10,8 +10,11 @@ import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart
 import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
+import 'package:flutter_amazon_clone/features/order_details/screen/order_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
+
+import '../features/account/model/order.dart';
 
 Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
   return switch (setting.name) {
@@ -46,8 +49,16 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
         setting: setting),
     CartScreen.routeName =>
       FadeTransitionRoute(page: const CartScreen(), setting: setting),
-    AddressScreen.routeName =>
-      FadeTransitionRoute(page: const AddressScreen(), setting: setting),
+    AddressScreen.routeName => FadeTransitionRoute(
+        page: AddressScreen(
+          totalAmount: setting.arguments.toString(),
+        ),
+        setting: setting),
+        OrderDetailScreen.routeName => FadeTransitionRoute(
+        page: OrderDetailScreen(
+          order: setting.arguments as Order,
+        ),
+        setting: setting),
     _ => MaterialPageRoute(
         settings: setting,
         builder: (_) => ErrorWidget(

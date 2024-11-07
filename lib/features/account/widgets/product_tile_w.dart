@@ -14,7 +14,8 @@ class ProductTileW extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 350,
+        width: 250,
+        height: 250,
         padding: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           color: Colors.white70,
@@ -23,11 +24,11 @@ class ProductTileW extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(
-            8,
+            6,
           ),
-          child:CachedNetworkImageW(
+          child: CachedNetworkImageW(
+            fit: BoxFit.fill,
             imageUrl: image, // URL of the image
-            
           ),
         ),
       ),

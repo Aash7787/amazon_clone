@@ -87,7 +87,7 @@ class UserAuthProvider extends ChangeNotifier {
   }
 
   Future<void> getUserDate(BuildContext context) async {
-    return await authService.getUserData(context);
+    return authService.getUserData(context);
   }
 
   @override

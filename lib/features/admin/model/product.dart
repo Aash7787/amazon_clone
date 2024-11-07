@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_amazon_clone/features/admin/model/rating.dart';
+
+import 'rating.dart';
+
 
 class Product {
   final String name;

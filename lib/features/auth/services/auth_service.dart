@@ -83,7 +83,7 @@ class AuthService {
     }
   }
 
-  Future<void> getUserData(
+  void getUserData(
     BuildContext context,
   ) async {
     try {
@@ -98,7 +98,7 @@ class AuthService {
 
       var response = jsonDecode(tokenResponse.body);
 
-      if (response == true) {
+      if (response) {
         var userResponse = await http.get(
           Uri.parse('$uri/'),
           headers: <String, String>{
@@ -112,7 +112,7 @@ class AuthService {
 
       log(response.body);
     } catch (e) {
-      // showSnackBar(context, e.toString());
+      log('error in getUserData');
     }
   }
 }

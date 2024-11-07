@@ -60,8 +60,10 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         Navigator.pushNamed(
-                            context, ProductDetailScreen.routeName,
-                            arguments: productList![index]);
+                          context,
+                          ProductDetailScreen.routeName,
+                          arguments: productList![index],
+                        );
                       },
                       child: Column(
                         children: [

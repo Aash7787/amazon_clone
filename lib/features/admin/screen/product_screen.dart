@@ -50,7 +50,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: const FloatingActionBtnW(),
             body: Center(
-              child: CustomGridView(productList: _products!),
+              child: CustomGridView(
+                productList: _products!,
+              ),
             ),
           );
   }
