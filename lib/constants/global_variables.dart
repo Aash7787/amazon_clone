@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String uri = '';//ip address is removed
+String uri = 'http://192.168.1.11:3000'; //ip address is removed
 
 const xToken = 'x-auth-token';
 

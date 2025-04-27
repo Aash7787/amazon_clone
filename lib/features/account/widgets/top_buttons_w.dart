@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/account_btn_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
+import 'package:flutter_amazon_clone/constants/utils.dart';
 import 'package:flutter_amazon_clone/features/account/service/account_service.dart';
 
 class TopButtonsW extends StatelessWidget {
@@ -17,11 +18,22 @@ class TopButtonsW extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: AccountBtnW(text: _yourOrder)),
-            Expanded(child: AccountBtnW(text: _turnSeller)),
+            Expanded(
+                child: AccountBtnW(
+              text: _yourOrder,
+              onPressed: () {},
+            )),
+            Expanded(
+                child: AccountBtnW(
+              text: _turnSeller,
+              longPressed: _turnToSeller,
+              onPressed: () {
+                showSnackBar(context, 'You need special permission for that !');
+              },
+            )),
           ],
         ),
         const SizedBox(
@@ -67,12 +79,21 @@ class TopButtonsW extends StatelessWidget {
                 },
               ),
             ),
-            const Expanded(
-              child: AccountBtnW(text: _yourWishList),
+            Expanded(
+              child: AccountBtnW(
+                text: _yourWishList,
+                onPressed: () {
+                  showSnackBar(context, 'No Wish found');
+                },
+              ),
             ),
           ],
         ),
       ],
     );
+  }
+
+  void _turnToSeller() {
+    
   }
 }

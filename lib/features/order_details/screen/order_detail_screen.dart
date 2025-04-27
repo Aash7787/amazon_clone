@@ -5,10 +5,10 @@ import 'package:flutter_amazon_clone/common/widgets/select_text_w.dart';
 import 'package:flutter_amazon_clone/features/account/model/order.dart';
 import 'package:flutter_amazon_clone/features/admin/service/admin_service.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_app_bar.dart';
 import '../widgets/view_order_text_w.dart';
 
 class OrderDetailScreen extends StatefulWidget {

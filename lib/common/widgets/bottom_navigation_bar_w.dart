@@ -23,8 +23,8 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
   static const _borderSideWidth = 5.0;
 
   static const _labelHome = 'Home';
-  static const _labelPerson = 'Home';
-  static const _labelCart = 'Home';
+  static const _labelPerson = 'Person';
+  static const _labelCart = 'Cart    ';
 
   var pages = [
     const HomeScreen(),
@@ -60,7 +60,6 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
           ),
           BottomNavigationBarItem(
             //  Person Bar
-
             label: _labelPerson,
             icon: Container(
               width: _width,
@@ -79,7 +78,6 @@ class _BottomNavigationBarWState extends State<BottomNavigationBarW> {
           ),
           BottomNavigationBarItem(
             //  Cart
-
             label: _labelCart,
             icon: Container(
               width: _width,

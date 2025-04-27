@@ -3,12 +3,13 @@ import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/select_text_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/star_rating_bar_w.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
+import 'package:flutter_amazon_clone/features/ai_product_detail/screen/ai_product_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/product_detail/service/product_detail_service.dart';
 import 'package:flutter_amazon_clone/features/product_detail/widgets/carousel_slider_detail_w.dart';
 import 'package:flutter_amazon_clone/features/product_detail/widgets/rating_bar_builder_w.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/product_detail_app_bar_w.dart';
 
 double myRating = 0;
 
@@ -26,6 +27,7 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   static const _buyNowT = 'Buy now';
   static const _addToCartT = 'Add to Cart';
+  static const _askAiAboutItT = 'Ask Ai';
 
   final ProductDetailService _productDetailService = ProductDetailService();
 
@@ -47,8 +49,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
-  void _addToCart() {
+  void _addToCart(BuildContext context) {
     _productDetailService.addToCart(context: context, product: widget.product);
+    Navigator.pop(context);
   }
 
   // @override
@@ -70,7 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ProductDetailAppBarW(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -144,11 +147,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 btnText: _buyNowT,
                 vertical: 10,
               ),
-              const SizedBox(
-                height: 5,
+              BtnW(
+                onTap: _askAiAboutIt,
+                btnText: _askAiAboutItT,
+                textColor: Colors.white,
+                btnColor: Colors.blue,
+                vertical: 10,
               ),
               BtnW(
-                onTap: _addToCart,
+                onTap: () => _addToCart(context),
                 btnText: _addToCartT,
                 textColor: Colors.black,
                 btnColor: Colors.yellow.shade600,
@@ -180,6 +187,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _askAiAboutIt() {
+    Navigator.pushNamed(
+      context,
+      AiProductDetailScreen.route,
     );
   }
 }

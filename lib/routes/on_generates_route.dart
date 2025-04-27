@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
+import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
 import 'package:flutter_amazon_clone/features/address/screen/address_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/add_product_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/product_screen.dart';
+import 'package:flutter_amazon_clone/features/ai_product_detail/screen/ai_product_detail_screen.dart';
+import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/features/cart/screen/cart_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/category_deals_screen.dart';
-import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
-import 'package:flutter_amazon_clone/features/account/screens/account_screen.dart';
-import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/features/home/screen/home_screen.dart';
 import 'package:flutter_amazon_clone/features/order_details/screen/order_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
@@ -54,11 +55,16 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
           totalAmount: setting.arguments.toString(),
         ),
         setting: setting),
-        OrderDetailScreen.routeName => FadeTransitionRoute(
+    OrderDetailScreen.routeName => FadeTransitionRoute(
         page: OrderDetailScreen(
           order: setting.arguments as Order,
         ),
         setting: setting),
+    AiProductDetailScreen.route => FadeTransitionRoute(
+        page: const AiProductDetailScreen(
+            senderMessage: 'This is the demo of sender card',
+            receiverMessage: text),
+      ),
     _ => MaterialPageRoute(
         settings: setting,
         builder: (_) => ErrorWidget(
@@ -82,3 +88,15 @@ class FadeTransitionRoute extends PageRouteBuilder {
                     ),
             settings: setting);
 }
+
+const text = '''fetch(url, {
+  method: "POST",        // Method is POST (not GET)
+  headers: {             // Headers to describe the request
+    "Authorization": "...",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ // The data you're sending, converted into a JSON string
+    model: "...",
+    messages: [...]
+  })
+});''';

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
+import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/search/screen/search_screen.dart';
+import 'package:flutter_amazon_clone/features/search/service/search_service.dart';
 
 String globalInitialValue = '';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  static const double _radius = 7.0;
-  static const double _appBarPaddingLeft = 15.0;
-  static const _appBarHint = 'Search Amazon.in';
-
-  static const _borderSideWidth = 1.5;
+  static const double _appBarPaddingLeft = 5.0;
+  static const double _appBarPaddingBottom = 5.0;
+  static const String _appBarHint = 'Search Amazon.in';
 
   const CustomAppBar({super.key});
 
@@ -21,10 +21,20 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  final SearchService searchService = SearchService();
+  late final SearchController _searchController;
+  List<Product> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = SearchController();
+  }
+
   void navigateToSearchScreen(String query) {
-    // Navigate to SearchScreen
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
     globalInitialValue = query;
+    _searchController.text = query;
   }
 
   @override
@@ -32,73 +42,51 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       flexibleSpace: Container(
         decoration: const BoxDecoration(
-          gradient: GlobalVariables
-              .appBarGradient, // Use the gradient from GlobalVariables
+          gradient: GlobalVariables.appBarGradient,
         ),
       ),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              padding:
-                  const EdgeInsets.only(left: CustomAppBar._appBarPaddingLeft),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(CustomAppBar._radius),
-                child: TextFormField(
-                  onFieldSubmitted: navigateToSearchScreen,
-                  decoration: InputDecoration(
-                    hintText: CustomAppBar._appBarHint,
-                    hintStyle: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 17,
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding: const EdgeInsets.only(top: 10),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black54,
-                        width: CustomAppBar._borderSideWidth,
-                      ),
-                    ),
-                    prefixIcon: InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.search,
-                      ),
-                    ),
-                  ),
-                ),
+      title: Container(
+        padding: const EdgeInsets.only(
+            left: CustomAppBar._appBarPaddingLeft,
+            bottom: CustomAppBar._appBarPaddingBottom),
+        child: SearchAnchor.bar(
+          viewBackgroundColor: Colors.white,
+          searchController: _searchController,
+          barLeading: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Icon(Icons.search),
+          ),
+          barTrailing: const [
+            Padding(
+              padding: EdgeInsets.only(
+                right: 8.0,
               ),
+              child: Icon(Icons.mic),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20),
-            child: const Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 15),
-                  child: Icon(Icons.mic),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+          barHintText: CustomAppBar._appBarHint,
+          onSubmitted: navigateToSearchScreen,
+          onChanged: (value) {
+            _fetchSearchProduct(value);
+          },
+          suggestionsBuilder: (context, controller) {
+            return products
+                .map(
+                  (e) => ListTile(
+                    title: Text(e.name),
+                    onTap: () => navigateToSearchScreen(e.name),
+                  ),
+                )
+                .toList();
+          },
+        ),
       ),
     );
+  }
+
+  _fetchSearchProduct(String searchQuery) async {
+    products = await searchService.fetchSearchProduct(
+        context: context, query: searchQuery);
+    setState(() {});
   }
 }

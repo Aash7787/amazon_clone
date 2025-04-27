@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AccountBtnW extends StatelessWidget {
-  const AccountBtnW({super.key, required this.text, this.onPressed});
+  const AccountBtnW({super.key, required this.text, this.onPressed, this.longPressed});
 
   static const _symmetricHorizontal = 10.0;
 
   static const _radius = 50.0;
 
   final VoidCallback? onPressed;
+
+  final VoidCallback? longPressed;
 
   final String text;
 
@@ -25,6 +27,7 @@ class AccountBtnW extends StatelessWidget {
         color: Colors.black12.withOpacity(opacity),
       ),
       child: OutlinedButton(
+        onLongPress: longPressed,
         onPressed: onPressed,
         child: Padding(
           padding: const EdgeInsets.all(padding),

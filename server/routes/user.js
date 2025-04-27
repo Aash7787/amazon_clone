@@ -118,4 +118,24 @@ userRouter.get("/api/orders/me", auth, async (req, res) => {
   }
 });
 
+userRouter.post("/api/make-admin/:id", auth, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { role: "admin" },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({
+      message: "User promoted to admin successfully",
+      user: updatedUser,
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = userRouter;
