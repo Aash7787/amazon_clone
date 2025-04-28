@@ -2,17 +2,17 @@ import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
-import 'package:provider/provider.dart';
-
 import 'package:flutter_amazon_clone/common/widgets/bottom_navigation_bar_w.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
 import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.dart';
 import 'package:flutter_amazon_clone/features/admin/screen/admin_screen.dart';
+import 'package:flutter_amazon_clone/features/ai_product_detail/service/bloc/ai_product_detail_bloc.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazon_clone/routes/on_generates_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -28,6 +28,9 @@ void main() {
             BlocProvider(
               create: (context) => AdminBloc(),
             ),
+            BlocProvider(
+              create: (context) => AiProductDetailBloc(),
+            )
           ],
           child: const MainApp(),
         ),

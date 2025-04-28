@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/address_box_w.dart';
-import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/carousel_slider_image_w.dart';
+import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/deal_of_the_day_w.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/top_categories_w.dart';
 

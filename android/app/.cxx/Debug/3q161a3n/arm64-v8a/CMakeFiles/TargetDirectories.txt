@@ -1,0 +1,2 @@
+/home/aash/Documents/.flutter/amazon_clone/android/app/.cxx/Debug/3q161a3n/arm64-v8a/CMakeFiles/edit_cache.dir
+/home/aash/Documents/.flutter/amazon_clone/android/app/.cxx/Debug/3q161a3n/arm64-v8a/CMakeFiles/rebuild_cache.dir

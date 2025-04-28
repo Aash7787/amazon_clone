@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class ReceiverMessageCart extends StatelessWidget {
   final String message;
   final String date;
+  final Color color;
 
   const ReceiverMessageCart({
     super.key,
+    this.color = Colors.transparent,
     required this.date,
     required this.message,
   });
@@ -16,13 +18,13 @@ class ReceiverMessageCart extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            maxWidth: MediaQuery.sizeOf(context).width - 5, minWidth: 110),
+            maxWidth: MediaQuery.sizeOf(context).width - 45, minWidth: 110),
         child: Card(
           elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          color: Colors.green,
+          color: color,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Stack(
             children: [

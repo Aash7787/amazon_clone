@@ -12,7 +12,7 @@ class Product {
   final int quantity;
   final String category;
   final List<String> images;
-  final String? id;
+  final String? id; 
   final List<Rating>? rating;
   Product({
     this.rating,

@@ -1,0 +1,1 @@
+/home/aash/Documents/.flutter/amazon_clone/build/app/intermediates/cxx/Debug/3q161a3n/obj/armeabi-v7a

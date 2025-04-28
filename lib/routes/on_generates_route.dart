@@ -61,8 +61,8 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
         ),
         setting: setting),
     AiProductDetailScreen.route => FadeTransitionRoute(
-        page: const AiProductDetailScreen(
-            senderMessage: 'This is the demo of sender card',
+        page:  AiProductDetailScreen(
+            senderMessage: setting.arguments as ({String promptMessage}),
             receiverMessage: text),
       ),
     _ => MaterialPageRoute(
