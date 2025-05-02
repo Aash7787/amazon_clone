@@ -162,25 +162,43 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   void _sellProduct() async {
-    if (_addProductFormKey.currentState!.validate() &&
-        context.read<AdminBloc>().images.isNotEmpty) {
-      log('$images');
+    final isFormValid = _addProductFormKey.currentState?.validate() ?? false;
+    final images = context.read<AdminBloc>().images;
+    final hasImages = images.isNotEmpty;
+
+    if (isFormValid && hasImages) {
       setState(() {
         isLoading = true;
       });
-      AdminService().sellProduct(
+
+      try {
+        log('Images: $images');
+
+        await AdminService().sellProduct(
           context: context,
-          name: productNameController.text,
-          description: descriptionController.text,
-          price: double.parse(priceController.text),
-          quantity: int.parse(quantityController.text),
+          name: productNameController.text.trim(),
+          description: descriptionController.text.trim(),
+          price: double.tryParse(priceController.text.trim()) ?? 0.0,
+          quantity: int.tryParse(quantityController.text.trim()) ?? 0,
           category: category,
-          images: images);
+          images: images,
+        );
+
+        showSnackBar(context, 'Product successfully listed');
+      } catch (e, stackTrace) {
+        log('Error during sellProduct: $e\n$stackTrace');
+        showSnackBar(context, 'Something went wrong. Please try again.');
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
     } else {
-      if (context.read<AdminBloc>().images.isEmpty) {
-        showSnackBar(context, 'Please Add some images');
-      } else {
-        showSnackBar(context, 'Fill up the fields');
+      if (!hasImages) {
+        showSnackBar(context, 'Please add some images.');
+      }
+      if (!isFormValid) {
+        showSnackBar(context, 'Please fill out all fields correctly.');
       }
     }
   }

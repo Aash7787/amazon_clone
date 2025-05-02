@@ -12,7 +12,6 @@ import 'package:flutter_amazon_clone/features/admin/controller/bloc/admin_bloc.d
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/model/sales.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';

@@ -16,20 +16,21 @@ class CustomGridView extends StatefulWidget {
 }
 
 class _CustomGridViewState extends State<CustomGridView> {
+  void _deleteProduct(Product product, int index) {
+    AdminService().deleteProduct(
+      context: context,
+      product: product,
+      onSuccess: () {
+        setState(() {
+          widget.productList.removeAt(index);
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    void deleteProduct(Product product, int index) {
-      AdminService().deleteProduct(
-        context: context,
-        product: product,
-        onSuccess: () {
-          widget.productList.removeAt(index);
-          setState(() {});
-        },
-      );
-    }
-
-    log('${widget.productList} is the list ');
+    log('${widget.productList} is the list');
 
     return GridView.builder(
       itemCount: widget.productList.length,
@@ -38,50 +39,62 @@ class _CustomGridViewState extends State<CustomGridView> {
         mainAxisExtent: 350,
       ),
       shrinkWrap: true,
-      itemBuilder: (context, index) => GirdViewItemBuilder(
-        onPressed: () => deleteProduct(widget.productList[index], index),
-        product: widget.productList[index],
-      ),
+      physics: const NeverScrollableScrollPhysics(), // if nested
+      itemBuilder: (context, index) {
+        final product = widget.productList[index];
+        return GridViewItemBuilder(
+          product: product,
+          onPressed: () => _deleteProduct(product, index),
+        );
+      },
     );
   }
 }
 
-class GirdViewItemBuilder extends StatelessWidget {
-  const GirdViewItemBuilder({super.key, required this.product, this.onPressed});
+class GridViewItemBuilder extends StatelessWidget {
+  const GridViewItemBuilder({
+    super.key,
+    required this.product,
+    this.onPressed,
+  });
 
   final Product product;
-
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: CachedNetworkImageW(
-              width: double.infinity,
-              fit: BoxFit.fill,
-              imageUrl: product.images[0],
-              // height: ,
+    return Card(
+      margin: const EdgeInsets.all(8),
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: CachedNetworkImageW(
+                width: double.infinity,
+                fit: BoxFit.cover,
+                imageUrl: product.images[0],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Row(
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: SelectTextW(product.name),
+                  child: SelectTextW(
+                    product.name,
+                    maxLines: 2,
+                  ),
                 ),
                 IconButton(
                   onPressed: onPressed,
-                  icon: const Icon(Icons.delete),
-                )
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                ),
               ],
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

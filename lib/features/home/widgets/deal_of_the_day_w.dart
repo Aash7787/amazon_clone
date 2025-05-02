@@ -1,14 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_amazon_clone/common/widgets/cached_network_image_w.dart';
 import 'package:flutter_amazon_clone/common/widgets/loader.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
+import 'package:flutter_amazon_clone/features/admin/model/rating.dart';
 import 'package:flutter_amazon_clone/features/home/service/home_services.dart';
 import 'package:flutter_amazon_clone/features/product_detail/screens/product_detail_screen.dart';
 
 class DealOfTheDayW extends StatefulWidget {
   const DealOfTheDayW({super.key});
-
-  static const _padding = EdgeInsets.only(left: 10, top: 15);
 
   @override
   State<DealOfTheDayW> createState() => _DealOfTheDayWState();
@@ -16,7 +15,6 @@ class DealOfTheDayW extends StatefulWidget {
 
 class _DealOfTheDayWState extends State<DealOfTheDayW> {
   Product? product;
-
   final homeService = HomeServices();
 
   @override
@@ -31,74 +29,149 @@ class _DealOfTheDayWState extends State<DealOfTheDayW> {
         ? const Loader()
         : product!.name.isEmpty
             ? const SizedBox()
-            : InkWell(
+            : GestureDetector(
                 onTap: _navigateToDetailScreen,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: DealOfTheDayW._padding,
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        'Deal of the day',
-                        style: TextStyle(
-                          fontSize: 20,
+                child: Card(
+                  elevation: 2,
+                  margin: const EdgeInsets.all(8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Header
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                        child: Text(
+                          'Deal of the day',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 300,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: product!.images
-                              .map(
-                                (e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: CachedNetworkImageW(
-                                    imageUrl: e,
-                                    fit: BoxFit.fill,
-                                    width: 200,
+
+                      // Image Carousel
+                      SizedBox(
+                        height: 220,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: product!.images.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(width: 8),
+                            itemBuilder: (context, index) => ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: CachedNetworkImage(
+                                  imageUrl: product!.images[index],
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Container(
+                                    color: Colors.grey[200],
+                                    child: const Center(child: Loader()),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    color: Colors.grey[200],
+                                    child: const Icon(Icons.error),
                                   ),
                                 ),
-                              )
-                              .toList(),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        '${product!.price}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 20),
+
+                      // Product Info
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Product Name
+                            Text(
+                              product!.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            // Price and Rating
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Price
+                                Text(
+                                  '\$${product!.price.toStringAsFixed(2)}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+
+                                // Rating (if available)
+                                if (product!.rating != null &&
+                                    product!.rating!.isNotEmpty)
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        _calculateAverageRating(
+                                                product!.rating!)
+                                            .toStringAsFixed(1),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        product!.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 18),
+
+                      // See All Button
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, bottom: 16),
+                        child: Text(
+                          'See all deals',
+                          style: TextStyle(
+                            color: Colors.cyan.shade800,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                      ).copyWith(left: 10),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'See all ',
-                        style: TextStyle(color: Colors.cyan.shade800),
-                      ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               );
+  }
+
+  double _calculateAverageRating(List<Rating> ratings) {
+    if (ratings.isEmpty) return 0;
+    final sum = ratings.fold(0.0, (total, current) => total + current.rating);
+    return sum / ratings.length;
   }
 
   void _dealOfDay() async {
@@ -107,7 +180,10 @@ class _DealOfTheDayWState extends State<DealOfTheDayW> {
   }
 
   void _navigateToDetailScreen() {
-    Navigator.pushNamed(context, ProductDetailScreen.routeName,
-        arguments: product);
+    Navigator.pushNamed(
+      context,
+      ProductDetailScreen.routeName,
+      arguments: product,
+    );
   }
 }

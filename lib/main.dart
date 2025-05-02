@@ -83,10 +83,6 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     final userProvider = context.watch<UserAuthProvider>();
     final user = userProvider.user;
-
-    log('User token: ${user.token}');
-
-    // If no network is available, show "No network" message
     if (_noNetwork) {
       log('network');
       return Container(
@@ -103,7 +99,6 @@ class _MainAppState extends State<MainApp> {
 
     // If still loading (fetching user data or checking network), show loading screen
     if (_isLoading) {
-      log('loading');
       return Container(
         color: Colors.white,
         height: double.infinity,
@@ -120,6 +115,8 @@ class _MainAppState extends State<MainApp> {
         ),
       );
     }
+
+    log('user: ${user.type}');
 
     // If everything is loaded, proceed to the appropriate screen based on user type
     return MaterialApp(
@@ -138,11 +135,11 @@ class _MainAppState extends State<MainApp> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       // Navigate based on token availability and user type
-      initialRoute: user.token.isNotEmpty
-          ? user.type == 'user'
-              ? BottomNavigationBarW.routeName
-              : AdminScreen.routeName
-          : AuthScreen.routeName,
+      home: user.token.isEmpty
+          ? const AuthScreen()
+          : user.type == 'user'
+              ? const BottomNavigationBarW()
+              : const AdminScreen(),
     );
   }
 }

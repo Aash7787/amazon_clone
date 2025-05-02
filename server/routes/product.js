@@ -3,9 +3,14 @@ const productRouter = express.Router();
 const auth = require("../middlewares/auth");
 const { Product } = require("../models/product");
 
+// Gets all products OR filters by category if provided
 productRouter.get("/api/products/", auth, async (req, res) => {
   try {
-    const products = await Product.find({ category: req.query.category });
+    const filter = {};
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+    const products = await Product.find(filter);
     res.json(products);
   } catch (e) {
     res.status(500).json({ error: e.message });

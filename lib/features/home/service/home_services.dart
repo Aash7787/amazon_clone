@@ -44,8 +44,32 @@ class HomeServices {
     return productList;
   }
 
-  Future<Product> fetchDealOfDay(
-      {required BuildContext context}) async {
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = context.read<UserAuthProvider>();
+
+    List<Product> products = [];
+
+    try {
+      final response = await get(Uri.parse('$uri/api/products'), headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        xToken: userProvider.user.token,
+      });
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          for (var jsonProduct in jsonDecode(response.body)) {
+            products.add(Product.fromJson(jsonEncode(jsonProduct)));
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return products;
+  }
+
+  Future<Product> fetchDealOfDay({required BuildContext context}) async {
     final userProvider = context.read<UserAuthProvider>();
     Product product = Product(
         name: '',

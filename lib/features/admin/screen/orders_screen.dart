@@ -44,8 +44,25 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     Navigator.pushNamed(context, OrderDetailScreen.routeName,
                         arguments: orderData);
                   },
-                  child: CachedNetworkImageW(
-                    imageUrl: orderData.products[0].images[0],
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black38,
+                              spreadRadius: 10,
+                              blurRadius: 50)
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                        child: CachedNetworkImageW(
+                          imageUrl: orderData.products[0].images[0],
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },
