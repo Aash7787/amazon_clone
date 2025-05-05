@@ -11,7 +11,7 @@ class SelectTextW extends StatelessWidget {
       {super.key,
       this.fontWeight,
       this.fontSize = 18,
-      this.maxLines = 2,
+      this.maxLines ,
       this.minLines = 1});
 
   @override

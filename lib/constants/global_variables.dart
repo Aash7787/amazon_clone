@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-const uri = 'http://192.168.1.14:3000'; //ip address is removed
+const uri = 'http://192.168.1.12:3000'; //ip address is removed
 
- const openAiUrl ='https://openrouter.ai/api/v1/chat/completions' ; 
+const openAiUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
 const xToken = 'x-auth-token';
 
-const apiKey= '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';
+const apiKey =
+    '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';
 
 class GlobalVariables {
   // COLORS
@@ -56,3 +57,12 @@ class GlobalVariables {
     },
   ];
 }
+
+
+/*
+Dress Watches
+Diver Watches 
+Chronograph Watches
+Field Watches 
+Smartwatches
+*/
