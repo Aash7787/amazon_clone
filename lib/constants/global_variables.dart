@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const uri = 'http://192.168.1.12:3000'; //ip address is removed
+const uri = 'https://amazon-clone-t6dj.onrender.com'; //ip address is removed
 
 const openAiUrl = 'https://openrouter.ai/api/v1/chat/completions';
 

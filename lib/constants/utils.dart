@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
+import 'package:flutter_amazon_clone/features/account/service/account_service.dart';
 
 void showSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
@@ -56,4 +58,37 @@ Future<List<File>> pickImages(BuildContext context) async {
     log('$e');
   }
   return images;
+}
+
+Future<void> logOut(BuildContext context) async {
+  return await showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Log Out'),
+        content: const SizedBox(
+          width: double.infinity,
+          child: Text(
+            'Do you want to log out?',
+            style: TextStyle(fontSize: 23),
+          ),
+        ),
+        actions: [
+          BtnW(
+            btnText: 'Yes',
+            borderRadius: 23,
+            onTap: () {
+              AccountService().logOut(context);
+              Navigator.pop(context); // Close dialog
+            },
+          ),
+          BtnW(
+            btnText: 'No',
+            borderRadius: 23,
+            onTap: () => Navigator.pop(context), // Close dialog
+          ),
+        ],
+      );
+    },
+  );
 }

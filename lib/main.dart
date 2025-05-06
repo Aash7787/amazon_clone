@@ -108,7 +108,7 @@ class _MainAppState extends State<MainApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/imgs/amazon_in.png'),
+              Image.asset('assets/imgs/insta_buy_logo_land.png'),
               const CircularProgressIndicator()
             ],
           ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/constants/global_variables.dart';
+import 'package:flutter_amazon_clone/constants/utils.dart';
 
 class CustomAppBarW extends StatelessWidget implements PreferredSizeWidget {
   static const String _amazonImgAsset =
-      'assets/imgs/amazon_in.png'; // Amazon logo asset
+      'assets/imgs/insta_buy_logo.png'; // Amazon logo asset
 
   const CustomAppBarW({super.key});
 
@@ -36,6 +37,12 @@ class CustomAppBarW extends StatelessWidget implements PreferredSizeWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          IconButton(
+            onPressed: () => logOut(context),
+            icon: const Icon(
+              Icons.logout,
+            ),
+          )
         ],
       ),
     );

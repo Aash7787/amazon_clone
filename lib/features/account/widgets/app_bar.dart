@@ -3,7 +3,7 @@ import 'package:flutter_amazon_clone/constants/global_variables.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   static const String _amazonImgAsset =
-      'assets/imgs/amazon_in.png'; // Amazon logo asset
+      'assets/imgs/insta_buy_logo.png'; // Amazon logo asset
 
   const CustomAppBar({super.key});
 
