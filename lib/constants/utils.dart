@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -55,7 +54,7 @@ Future<List<File>> pickImages(BuildContext context) async {
       showSnackBar(context, 'Images picked: ${images.length}');
     }
   } catch (e) {
-    log('$e');
+    showSnackBar(context, e.toString());
   }
   return images;
 }

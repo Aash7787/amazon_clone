@@ -137,9 +137,9 @@ class _MainAppState extends State<MainApp> {
       // Navigate based on token availability and user type
       home: user.token.isEmpty
           ? const AuthScreen()
-          : user.type == 'user'
-              ? const BottomNavigationBarW()
-              : const AdminScreen(),
+          : user.type == 'admin'
+              ? const AdminScreen()
+              : const BottomNavigationBarW(),
     );
   }
 }
