@@ -57,12 +57,3 @@ class GlobalVariables {
     },
   ];
 }
-
-
-/*
-Dress Watches
-Diver Watches 
-Chronograph Watches
-Field Watches 
-Smartwatches
-*/

@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:developer'; // Import the log function for debugging
+import 'dart:io';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-class AdminService {
+class AdminService with ChangeNotifier {
   Future<void> sellProduct({
     required BuildContext context,
     required String name,
@@ -74,23 +74,22 @@ class AdminService {
       httpErrorHandle(
         response: response,
         context: context,
-        onSuccess: () async {
-          log('Product added successfully'); // Log success
+        onSuccess: () {
           showSnackBar(context, 'Product added successfully');
-
           context.read<AdminBloc>().images.clear();
-          await Future.delayed(const Duration(seconds: 1),
-              () => Navigator.pop(context)); // Close the screen on success
+          Navigator.pop(context);
         },
       );
+      notifyListeners();
     } catch (e) {
       log('Error occurred: $e'); // Log any caught error
-      // Show error message if an exception occurs
       showSnackBar(context, e.toString());
     }
   }
 
-  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+  Future<List<Product>> fetchAllProducts(
+    BuildContext context,
+  ) async {
     final userProvider = context.read<UserAuthProvider>();
     List<Product> productList = [];
     try {
@@ -101,6 +100,8 @@ class AdminService {
           xToken: userProvider.user.token,
         },
       );
+      notifyListeners();
+
       httpErrorHandle(
         response: response,
         context: context,
@@ -116,6 +117,7 @@ class AdminService {
           }
         },
       );
+      notifyListeners();
     } catch (e) {
       showSnackBar(context, e.toString());
     }
@@ -125,7 +127,7 @@ class AdminService {
   void deleteProduct(
       {required BuildContext context,
       required Product product,
-      required VoidCallback onSuccess}) async {
+     }) async {
     final userProvider = context.read<UserAuthProvider>();
 
     try {
@@ -147,7 +149,7 @@ class AdminService {
         context: context,
         onSuccess: () async {
           showSnackBar(context, 'Deleted');
-          onSuccess();
+          
 
           // Close the screen on success
         },

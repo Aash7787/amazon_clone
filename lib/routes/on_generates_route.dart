@@ -74,20 +74,22 @@ Route<dynamic>? onGenerateRoutes(RouteSettings setting) {
   };
 }
 
-class FadeTransitionRoute extends PageRouteBuilder {
+class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
   final RouteSettings? setting;
+
   FadeTransitionRoute({required this.page, this.setting})
       : super(
-            pageBuilder: (context, animation, secondaryAnimation) => page,
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-                      opacity: animation,
-                      child: page,
-                    ),
-            settings: setting);
+          pageBuilder: (context, animation, secondaryAnimation) => page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+                opacity: animation,
+                child: child, // Use `child` instead of `page`
+              ),
+          settings: setting,
+        );
 }
+
 
 const text = '''fetch(url, {
   method: "POST",        // Method is POST (not GET)

@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/loader.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
 import 'package:flutter_amazon_clone/features/admin/service/admin_service.dart';
 import 'package:flutter_amazon_clone/features/admin/widgets/custom_grid_view.dart';
 import 'package:flutter_amazon_clone/features/admin/widgets/floating_action_btn_w.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -17,13 +16,11 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  final admin = AdminService();
-
-  List<Product>? _products;
+  List<Product> products = [];
 
   @override
   void initState() {
-    fetchAllProduct();
+    AdminService().fetchAllOrders(context);
     super.initState();
   }
 
@@ -34,24 +31,51 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   fetchAllProduct() async {
-    log('$_products before');
-
-    _products = await admin.fetchAllProducts(context);
-    setState(() {});
-    log('$_products');
+    products = await context.watch<AdminService>().fetchAllProducts(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return _products == null
+    return products.isEmpty
         ? const Loader()
         : Scaffold(
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: const FloatingActionBtnW(),
-            body: CustomGridView(
-              productList: _products!,
-            ),
+            body: AllProductsGrid(products: products));
+  }
+}
+
+class AllProductsGrid extends StatelessWidget {
+  const AllProductsGrid({super.key, required this.products});
+
+  final List<Product> products;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AdminService>(
+      builder: (context, value, child) => GridView.builder(
+        itemCount: products.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 350,
+        ),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return GridViewItemBuilder(
+            product: product,
+            onPressed: () => _deleteProduct(product, index, context),
           );
+        },
+      ),
+    );
+  }
+
+  void _deleteProduct(Product product, int index, context) {
+    AdminService().deleteProduct(
+      context: context,
+      product: product,
+    );
   }
 }
