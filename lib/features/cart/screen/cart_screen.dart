@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/btn_w.dart';
+import 'package:flutter_amazon_clone/constants/utils.dart';
 import 'package:flutter_amazon_clone/features/address/screen/address_screen.dart';
 import 'package:flutter_amazon_clone/features/admin/model/product.dart';
+import 'package:flutter_amazon_clone/features/auth/models/user.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
 import 'package:flutter_amazon_clone/features/cart/widgets/cart_product_w.dart';
 import 'package:flutter_amazon_clone/features/cart/widgets/cart_subtotal.dart';
@@ -41,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
               btnText: 'Proceed to Buy (${user.cart.length} items)',
               btnColor: Colors.yellow.shade600,
               textColor: Colors.black,
-              onTap: () => _navigateToAddress(sum),
+              onTap: () => _navigateToAddress(sum, user),
             ),
             const SizedBox(height: 10),
             Container(
@@ -68,7 +70,11 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  void _navigateToAddress(num sum) {
-    Navigator.pushNamed(context, AddressScreen.routeName, arguments: sum);
+  void _navigateToAddress(num sum, User user) {
+    if (user.cart.isNotEmpty) {
+      Navigator.pushNamed(context, AddressScreen.routeName, arguments: sum);
+    } else {
+      showSnackBar(context, 'There is no item to processed');
+    }
   }
 }
