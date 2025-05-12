@@ -124,10 +124,10 @@ class AdminService with ChangeNotifier {
     return productList;
   }
 
-  void deleteProduct(
-      {required BuildContext context,
-      required Product product,
-     }) async {
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+  }) async {
     final userProvider = context.read<UserAuthProvider>();
 
     try {
@@ -149,7 +149,6 @@ class AdminService with ChangeNotifier {
         context: context,
         onSuccess: () async {
           showSnackBar(context, 'Deleted');
-          
 
           // Close the screen on success
         },

@@ -19,12 +19,6 @@ class _ProductScreenState extends State<ProductScreen> {
   List<Product> products = [];
 
   @override
-  void initState() {
-    AdminService().fetchAllOrders(context);
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     fetchAllProduct();
     super.didChangeDependencies();
