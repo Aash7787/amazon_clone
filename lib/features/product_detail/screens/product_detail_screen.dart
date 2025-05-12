@@ -7,6 +7,7 @@ import 'package:flutter_amazon_clone/features/admin/model/rating.dart';
 import 'package:flutter_amazon_clone/features/ai_product_detail/screen/ai_product_detail_screen.dart';
 import 'package:flutter_amazon_clone/features/ai_product_detail/service/bloc/ai_product_detail_bloc.dart';
 import 'package:flutter_amazon_clone/features/auth/providers/user_auth_provider.dart';
+import 'package:flutter_amazon_clone/features/cart/screen/cart_screen.dart';
 import 'package:flutter_amazon_clone/features/home/widgets/custom_app_bar.dart';
 import 'package:flutter_amazon_clone/features/product_detail/service/product_detail_service.dart';
 import 'package:flutter_amazon_clone/features/product_detail/widgets/carousel_slider_detail_w.dart';
@@ -145,9 +146,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 height: 5,
                 color: Colors.black38,
               ),
-              const BtnW(
+              BtnW(
                 btnText: _buyNowT,
                 vertical: 10,
+                onTap: () async {
+                  _addToCart(context);
+                  await Future.delayed(Durations.medium1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CartScreen(),
+                    ),
+                  );
+                },
               ),
               BtnW(
                 onTap: _askAiAboutIt,
@@ -202,9 +213,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       images: widget.product.images,
       averageRating: calculateAverageRating(widget.product.rating), // Optional
     );
-    Navigator.pushNamed(context, AiProductDetailScreen.route, arguments: (
-      promptMessage: generatePrompt
-    ));
+    Navigator.pushNamed(context, AiProductDetailScreen.route,
+        arguments: (promptMessage: generatePrompt));
 
     context.read<AiProductDetailBloc>().add(
           AiProductSendResponse(generatePrompt),
