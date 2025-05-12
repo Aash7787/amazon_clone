@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amazon_clone/common/widgets/select_text_w.dart';
@@ -10,7 +11,6 @@ import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/providers/user_auth_provider.dart';
-import '../payment_configurations/payment_configurations.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key, required this.totalAmount});
@@ -121,19 +121,19 @@ class _AddressScreenState extends State<AddressScreen> {
           const Spacer(
             flex: 2,
           ),
-          GooglePayButton(
-            paymentConfiguration:
-                PaymentConfiguration.fromJsonString(defaultGooglePay),
-            onPaymentResult: (result) {
-              log('${context.read<UserAuthProvider>().user.address} address');
+          // GooglePayButton(
+          //   paymentConfiguration:
+          //       PaymentConfiguration.fromJsonString(defaultGooglePay),
+          //   onPaymentResult: (result) {
+          //     log('${context.read<UserAuthProvider>().user.address} address');
 
-              log('onPayment is pressed $result');
-              _onGooglePayResult(result);
-            },
-            onPressed: () => payPressed(address),
-            loadingIndicator: const CupertinoActivityIndicator(),
-            paymentItems: payment,
-          ),
+          //     log('onPayment is pressed $result');
+          //     _onGooglePayResult(result);
+          //   },
+          //   onPressed: () => payPressed(address),
+          //   loadingIndicator: const CupertinoActivityIndicator(),
+          //   paymentItems: payment,
+          // ),
           const Spacer(
             flex: 6,
           ),
@@ -202,6 +202,4 @@ class _AddressScreenState extends State<AddressScreen> {
       showSnackBar(context, 'ERROR');
     }
   }
-
-
 }

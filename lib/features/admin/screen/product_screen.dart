@@ -30,13 +30,12 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return products.isEmpty
-        ? const Loader()
-        : Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: const FloatingActionBtnW(),
-            body: AllProductsGrid(products: products));
+    return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: const FloatingActionBtnW(),
+        body: products.isEmpty
+            ? const Loader()
+            : AllProductsGrid(products: products));
   }
 }
 
